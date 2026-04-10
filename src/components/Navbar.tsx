@@ -17,7 +17,7 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         <a href="#" className="flex items-center gap-3">
           <img src={logo} alt="NMFC Logo" className="h-10 w-10" />
-          <span className="font-display text-lg text-hero-foreground tracking-tight">
+          <span className="font-display text-xl text-hero-foreground tracking-wider uppercase">
             New Mexico First Chaplains
           </span>
         </a>
