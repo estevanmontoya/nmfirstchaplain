@@ -1,0 +1,132 @@
+import { useState, FormEvent } from "react";
+import { Mail, Phone, MapPin } from "lucide-react";
+
+const ContactSection = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    agency: "",
+    email: "",
+    interest: "",
+    message: "",
+  });
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`NMFC Inquiry: ${formData.interest || "General"}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nAgency: ${formData.agency}\nEmail: ${formData.email}\nInterest: ${formData.interest}\n\n${formData.message}`
+    );
+    window.location.href = `mailto:jeff@nmfirstchaplains.org?subject=${subject}&body=${body}`;
+  };
+
+  return (
+    <section id="contact" className="py-24 bg-muted">
+      <div className="container mx-auto px-4">
+        <p className="text-primary font-semibold uppercase tracking-[0.2em] text-sm mb-3 text-center">
+          Get in Touch
+        </p>
+        <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4 text-center">
+          Contact New Mexico First Chaplains
+        </h2>
+        <p className="text-muted-foreground text-center max-w-xl mx-auto mb-16">
+          Interested in chaplain training or starting a chaplain program? We'd love to hear from you.
+        </p>
+
+        <div className="grid lg:grid-cols-5 gap-12 max-w-5xl mx-auto">
+          <div className="lg:col-span-2 space-y-8">
+            <h3 className="font-display text-xl text-foreground mb-6">Direct Contact</h3>
+            <div className="flex items-start gap-4">
+              <Mail className="h-5 w-5 text-primary mt-1 shrink-0" />
+              <div>
+                <p className="font-semibold text-sm text-foreground">Email</p>
+                <a href="mailto:jeff@nmfirstchaplains.org" className="text-muted-foreground text-sm hover:text-primary transition-colors">
+                  jeff@nmfirstchaplains.org
+                </a>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <Phone className="h-5 w-5 text-primary mt-1 shrink-0" />
+              <div>
+                <p className="font-semibold text-sm text-foreground">Phone</p>
+                <a href="tel:5053506984" className="text-muted-foreground text-sm hover:text-primary transition-colors">
+                  (505) 350-6984
+                </a>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <MapPin className="h-5 w-5 text-primary mt-1 shrink-0" />
+              <div>
+                <p className="font-semibold text-sm text-foreground">Service Area</p>
+                <p className="text-muted-foreground text-sm">Statewide — New Mexico</p>
+              </div>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="lg:col-span-3 space-y-5">
+            <h3 className="font-display text-xl text-foreground mb-2">Send a Message</h3>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5">Your Name *</label>
+                <input
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded border border-input bg-card text-card-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5">Agency / Organization</label>
+                <input
+                  value={formData.agency}
+                  onChange={(e) => setFormData({ ...formData, agency: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded border border-input bg-card text-card-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-1.5">Email Address *</label>
+              <input
+                type="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="w-full px-4 py-2.5 rounded border border-input bg-card text-card-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-1.5">I'm Interested In</label>
+              <select
+                value={formData.interest}
+                onChange={(e) => setFormData({ ...formData, interest: e.target.value })}
+                className="w-full px-4 py-2.5 rounded border border-input bg-card text-card-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              >
+                <option value="">Select a topic...</option>
+                <option>Chaplain Training Information</option>
+                <option>Starting a Chaplain Program</option>
+                <option>General Inquiry</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-1.5">Message *</label>
+              <textarea
+                required
+                rows={4}
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                className="w-full px-4 py-2.5 rounded border border-input bg-card text-card-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-primary text-primary-foreground px-8 py-3 rounded font-semibold text-sm uppercase tracking-wider hover:bg-primary/90 transition-colors"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ContactSection;
