@@ -131,10 +131,17 @@ const ContactSection = () => {
             </div>
             <button
               type="submit"
-              className="bg-primary text-primary-foreground px-8 py-3 rounded font-semibold text-sm uppercase tracking-wider hover:bg-primary/90 transition-colors"
+              disabled={status === "sending"}
+              className="bg-primary text-primary-foreground px-8 py-3 rounded font-semibold text-sm uppercase tracking-wider hover:bg-primary/90 transition-colors disabled:opacity-50"
             >
-              Send Message
+              {status === "sending" ? "Sending..." : "Send Message"}
             </button>
+            {status === "success" && (
+              <p className="text-green-600 text-sm mt-2">Message sent successfully! We'll be in touch soon.</p>
+            )}
+            {status === "error" && (
+              <p className="text-red-600 text-sm mt-2">Failed to send. Please try again or email us directly.</p>
+            )}
           </form>
         </div>
       </div>
