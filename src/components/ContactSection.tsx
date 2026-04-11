@@ -9,14 +9,27 @@ const ContactSection = () => {
     interest: "",
     message: "",
   });
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`NMFC Inquiry: ${formData.interest || "General"}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nAgency: ${formData.agency}\nEmail: ${formData.email}\nInterest: ${formData.interest}\n\n${formData.message}`
-    );
-    window.location.href = `mailto:jeff@nmfirstchaplains.org?subject=${subject}&body=${body}`;
+    setStatus("sending");
+    try {
+      const res = await fetch("/send-mail.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const result = await res.json();
+      if (result.success) {
+        setStatus("success");
+        setFormData({ name: "", agency: "", email: "", interest: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -118,10 +131,17 @@ const ContactSection = () => {
             </div>
             <button
               type="submit"
-              className="bg-primary text-primary-foreground px-8 py-3 rounded font-semibold text-sm uppercase tracking-wider hover:bg-primary/90 transition-colors"
+              disabled={status === "sending"}
+              className="bg-primary text-primary-foreground px-8 py-3 rounded font-semibold text-sm uppercase tracking-wider hover:bg-primary/90 transition-colors disabled:opacity-50"
             >
-              Send Message
+              {status === "sending" ? "Sending..." : "Send Message"}
             </button>
+            {status === "success" && (
+              <p className="text-green-600 text-sm mt-2">Message sent successfully! We'll be in touch soon.</p>
+            )}
+            {status === "error" && (
+              <p className="text-red-600 text-sm mt-2">Failed to send. Please try again or email us directly.</p>
+            )}
           </form>
         </div>
       </div>
