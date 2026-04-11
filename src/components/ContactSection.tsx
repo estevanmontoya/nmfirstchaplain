@@ -9,14 +9,27 @@ const ContactSection = () => {
     interest: "",
     message: "",
   });
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`NMFC Inquiry: ${formData.interest || "General"}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nAgency: ${formData.agency}\nEmail: ${formData.email}\nInterest: ${formData.interest}\n\n${formData.message}`
-    );
-    window.location.href = `mailto:jeff@nmfirstchaplains.org?subject=${subject}&body=${body}`;
+    setStatus("sending");
+    try {
+      const res = await fetch("/send-mail.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const result = await res.json();
+      if (result.success) {
+        setStatus("success");
+        setFormData({ name: "", agency: "", email: "", interest: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
