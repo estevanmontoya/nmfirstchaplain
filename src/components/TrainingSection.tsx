@@ -46,10 +46,12 @@ const TrainingSection = () => (
             </div>
           </div>
           <a
-            href="#contact"
+            href="/Basic_Law_Enforcement_Chaplain_Training.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded font-semibold text-sm uppercase tracking-wider hover:bg-primary/90 transition-colors"
           >
-            Request Training Info
+            Download Syllabus
           </a>
         </div>
         <div className="space-y-3">
