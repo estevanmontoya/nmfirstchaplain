@@ -1,6 +1,8 @@
 import { useState, FormEvent } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
 
+const FORM_ENDPOINT = "https://formsubmit.co/ajax/jeff@nmfirstchaplains.org";
+
 const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -15,10 +17,24 @@ const ContactSection = () => {
     e.preventDefault();
     setStatus("sending");
     try {
-      const res = await fetch("/send-mail.php", {
+      const res = await fetch(FORM_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          agency: formData.agency,
+          email: formData.email,
+          interest: formData.interest,
+          message: formData.message,
+          _subject: "New NM First Chaplain contact form submission",
+          _template: "table",
+          _replyto: formData.email,
+          _honey: "",
+          _captcha: "false",
+        }),
       });
       const result = await res.json();
       if (result.success) {
