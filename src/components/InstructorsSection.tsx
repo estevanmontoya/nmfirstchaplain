@@ -1,5 +1,6 @@
 import { User } from "lucide-react";
 import carrJeffImg from "@/assets/carr-jeff.jpg";
+import chrisKeelingImg from "@/assets/chris-keeling.jpg";
 
 const instructors = [
   {
@@ -17,11 +18,16 @@ const instructors = [
     ],
   },
   {
-    name: "Instructor Name",
+    name: "Chris Keeling Sr.",
     role: "Instructor",
-    image: null,
+    image: chrisKeelingImg,
     bio: [
-      "Bio paragraph for the second NMFC instructor. This section can be updated with their full name, title, and background once provided.",
+      "Retired Deputy – Los Angeles County Sheriff's Department (33 years of service)",
+      "4 Years of Service in Law Enforcement Chaplaincy",
+      "Law Enforcement Chaplain – Sandoval County Sheriff's Office",
+      "Chaplain – Blue Cancer Connect",
+      "NMLEA Professional Lecturer",
+      "NM Crisis Support Team Member",
     ],
   },
 ];
