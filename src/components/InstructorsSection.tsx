@@ -58,11 +58,11 @@ const InstructorsSection = () => (
             <h3 className="font-display text-xl text-card-foreground">{inst.name}</h3>
             <p className="text-primary text-sm font-medium mb-1">{inst.role}</p>
             <p className="text-muted-foreground text-xs mb-4">New Mexico First Chaplains</p>
-            <ul className="space-y-1">
+            <ul className="space-y-0.5">
               {inst.bio.map((item, i) => (
-                <li key={i} className="text-muted-foreground text-sm leading-relaxed flex items-start gap-2">
-                  <span className="text-primary mt-1.5 shrink-0">•</span>
-                  {item}
+                <li key={i} className="text-muted-foreground text-sm leading-snug flex items-baseline gap-2">
+                  <span className="text-primary shrink-0">•</span>
+                  <span>{item}</span>
                 </li>
               ))}
             </ul>
