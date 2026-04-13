@@ -1,15 +1,28 @@
 import { User } from "lucide-react";
+import carrJeffImg from "@/assets/carr-jeff.jpg";
 
 const instructors = [
   {
     name: "Chaplain Jeff Carr",
     role: "Lead Instructor",
-    bio: "Chaplain Jeff Carr brings extensive experience in law enforcement chaplaincy to NMFC's training program. His background spans years of frontline ministry alongside officers and their families, equipping him to deliver training that is both practically grounded and deeply compassionate.",
+    image: carrJeffImg,
+    bio: [
+      "Lead Chaplain for the Sandoval County Sheriff's Office",
+      "28 Years as a Law Enforcement Chaplain",
+      "ICPC Master Chaplain & Instructor",
+      "NMLEA Professional Lecturer",
+      "Author of NMLEA Approved Law Enforcement Chaplain Training",
+      "Founder of Back the Blue Ministries and New Mexico FIRST Chaplains",
+      "NM Crisis Support Team Member",
+    ],
   },
   {
     name: "Instructor Name",
     role: "Instructor",
-    bio: "Bio paragraph for the second NMFC instructor. This section can be updated with their full name, title, and background once provided. Each instructor card is designed to highlight their experience and commitment to supporting the law enforcement chaplaincy community.",
+    image: null,
+    bio: [
+      "Bio paragraph for the second NMFC instructor. This section can be updated with their full name, title, and background once provided.",
+    ],
   },
 ];
 
@@ -24,13 +37,29 @@ const InstructorsSection = () => (
       <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         {instructors.map((inst) => (
           <div key={inst.name} className="bg-card border border-border rounded-lg p-8 hover:shadow-lg transition-shadow">
-            <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mb-6">
-              <User className="h-8 w-8 text-muted-foreground" />
-            </div>
+            {inst.image ? (
+              <img
+                src={inst.image}
+                alt={inst.name}
+                className="h-24 w-24 rounded-full object-cover object-top mb-6"
+                loading="lazy"
+              />
+            ) : (
+              <div className="h-24 w-24 rounded-full bg-muted flex items-center justify-center mb-6">
+                <User className="h-10 w-10 text-muted-foreground" />
+              </div>
+            )}
             <h3 className="font-display text-xl text-card-foreground">{inst.name}</h3>
             <p className="text-primary text-sm font-medium mb-1">{inst.role}</p>
             <p className="text-muted-foreground text-xs mb-4">New Mexico First Chaplains</p>
-            <p className="text-muted-foreground text-sm leading-relaxed">{inst.bio}</p>
+            <ul className="space-y-1">
+              {inst.bio.map((item, i) => (
+                <li key={i} className="text-muted-foreground text-sm leading-relaxed flex items-start gap-2">
+                  <span className="text-primary mt-1.5 shrink-0">•</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>
